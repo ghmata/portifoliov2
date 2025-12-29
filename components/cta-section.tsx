@@ -16,13 +16,32 @@ export function CTASection() {
     email: "",
     message: "",
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log(formData)
-    alert("Mensagem enviada com sucesso!")
-    setFormData({ name: "", email: "", message: "" })
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch("https://formspree.io/f/xgoendao", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        setFormData({ name: "", email: "", message: "" })
+        alert("Mensagem enviada com sucesso! Entrarei em contato em breve.")
+      } else {
+        alert("Erro ao enviar mensagem. Tente novamente.")
+      }
+    } catch (error) {
+      alert("Erro ao enviar mensagem. Tente novamente.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const whatsappNumber = "5561983073229"
@@ -97,10 +116,11 @@ export function CTASection() {
               </div>
               <Button
                 type="submit"
-                className="w-full bg-[#00ff88] text-[#0a0e27] hover:bg-[#00ff88]/90 font-semibold neon-glow"
+                disabled={isSubmitting}
+                className="w-full bg-[#00ff88] text-[#0a0e27] hover:bg-[#00ff88]/90 font-semibold neon-glow disabled:opacity-50"
               >
                 <Send className="mr-2 h-4 w-4" />
-                Enviar Mensagem
+                {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
               </Button>
             </form>
           </div>
