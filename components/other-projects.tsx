@@ -48,7 +48,7 @@ const otherProjects = [
   },
   {
     id: 4,
-    name: "ClinicaBot",
+    name: "ClinicAI",
     subtitle: "Agendamento Inteligente",
     description: "Sistema de agendamento automatizado para clínicas e consultórios. Para saber mais, clique em Detalhes.",
     fullDescription: "Plataforma de agendamento para clínicas com confirmação automática via WhatsApp, lembretes, gestão de pacientes e relatórios de ocupação.",
@@ -233,7 +233,7 @@ export function OtherProjects() {
               >
                 <div className="relative h-48 overflow-hidden bg-[#0a0e27] flex items-center justify-center">
                   {project.isMobile ? (
-                    <IPhoneFrame imageSrc={project.mobileImages?.[0] || project.image} alt={project.name} />
+                    <IPhoneFrame imageSrc={project.image} alt={project.name} />
                   ) : (
                     <img
                       src={project.image || "/placeholder.svg"}
